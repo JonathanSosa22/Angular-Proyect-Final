@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title style="padding: 20px">
-    Creacion/Edición de un viaje
+    Creacion/Edición de una persona
   </mat-card-title>
 
   <mat-card-content>
@@ -115,6 +115,7 @@
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let bus of busList" [value]="bus.id">
               {{ bus.patente }} - {{ bus.cantidadAsientos }} -
+              {{ bus.model?.marca }}
             </mat-option>
           </mat-select>
 
@@ -137,7 +138,11 @@
         <mat-form-field>
           <mat-label>Pasajeros:</mat-label>
 
-          <mat-select formControlName="pasajeros" multiple>
+          <mat-select
+            formControlName="pasajeros"
+            multiple
+            [compareWith]="compareObjects"
+          >
             <mat-option *ngFor="let person of personList" [value]="person.id">
               {{ person.nombre }} {{ person.apellido }}
             </mat-option>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Trip } from '../../../models/trip';
 import { TripService } from '../../../services/trip.service';
+import { ModeloService } from '../../../services/modelo.service';
 import { BusService } from '../../../services/bus.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -23,7 +24,6 @@ export class TripListComponent implements OnInit {
   dataSource = [
     new Trip(1, 'Viedma', 'Patagones', '2023-06-29', '2023-06-29', 1),
   ];
-  tripList: Trip[] = [];
 
   constructor(
     private tripService: TripService,
@@ -55,6 +55,10 @@ export class TripListComponent implements OnInit {
     });
   }
 
+  editarTrip(trip) {
+    this.router.navigate(['trips', 'detail', trip.id]);
+  }
+
   borrarTrip(trip: Trip): void {
     this.tripService.borrar(trip.id).subscribe(
       (res) => {
@@ -66,10 +70,6 @@ export class TripListComponent implements OnInit {
         this.matSnackBar.open(error, 'Cerrar');
       }
     );
-  }
-
-  seleccionarTrip(trip: Trip) {
-    this.router.navigate(['trips', 'detail', trip.id]);
   }
 
   crearViaje() {

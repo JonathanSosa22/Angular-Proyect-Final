@@ -6,10 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Person } from '../../../models/person';
 import { ModeloService } from '../../../services/modelo.service';
 import { Model } from '../../../models/model';
-import { PersonService } from '../../../services/person.service';
+import { PersonDTO, PersonService } from '../../../services/person.service';
 import { TripDTO, TripService } from '../../../services/trip.service';
 import { Trip } from '../../../models/trip';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-trip-detail',
@@ -38,13 +38,13 @@ export class TripDetailComponent implements OnInit {
     private personService: PersonService,
     private tripService: TripService,
     private router: Router,
+    private route: ActivatedRoute,
     private matSnackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     this.busService.findAll().subscribe(
       (res) => {
-        console.log(res);
         this.busList = res.body.map((json) => {
           const bus = new Bus(
             json.id,
@@ -67,6 +67,32 @@ export class TripDetailComponent implements OnInit {
         (json) => new Person(json.id, json.age, json.name, json.lastName)
       );
     });
+
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      console.log('El id que estoy editando es: ' + id);
+      if (id) {
+        // @ts-ignore
+        this.findTrip(Number(id));
+      }
+    });
+  }
+
+  findTrip(id: number) {
+    this.tripService.findOne(id).subscribe((res) => {
+      this.selectedTrip = res;
+
+      this.tripForm.patchValue({
+        origen: res.lugarSalida,
+        destino: res.lugarDestino,
+        fechaSalida: new Date(res.fechaSalida),
+        fechaLlegada: new Date(res.fechaLlegada),
+        colectivo: res.idColectivo,
+      });
+
+      // @ts-ignore
+      this.tripForm.get('pasajeros').setValue(res.personaId);
+    });
   }
 
   findModeloColectivo(colectivo: Bus) {
@@ -79,7 +105,6 @@ export class TripDetailComponent implements OnInit {
     const pasajeros: number[] = this.tripForm.get('pasajeros').value;
 
     const body: TripDTO = {
-      id: null,
       lugarSalida: this.tripForm.get('origen').value,
       lugarDestino: this.tripForm.get('destino').value,
       fechaLlegada: this.tripForm.get('fechaLlegada').value,
@@ -89,25 +114,15 @@ export class TripDetailComponent implements OnInit {
     };
 
     if (this.selectedTrip && this.selectedTrip.id) {
-      console.log('Actualizando un viaje');
+      // LLamar al metodo actualizar
+      console.log('Actualizando una persona');
 
       body.id = this.selectedTrip.id;
 
-      this.tripService.actualizarTrip(body).subscribe(
-        (res) => {
-          this.matSnackBar.open('Se guardaron los cambios del viaje', 'Cerrar');
-          this.router.navigate(['trips', 'list']);
-        },
-        (error) => {
-          console.log(error);
-          this.matSnackBar.open(error, 'Cerrar');
-        }
-      );
-    } else {
-      this.tripService.crearTrip(body).subscribe(
+      this.tripService.actualizarViaje(body).subscribe(
         (res) => {
           this.matSnackBar.open(
-            'Se actualizo el viaje correctamente',
+            'Se guardaron los cambios de la persona',
             'Cerrar'
           );
           this.router.navigate(['trips', 'list']);
@@ -117,7 +132,23 @@ export class TripDetailComponent implements OnInit {
           this.matSnackBar.open(error, 'Cerrar');
         }
       );
+    } else {
+      this.tripService.crearViaje(body).subscribe(
+        (res) => {
+          this.matSnackBar.open('Se creo la persona correctamente', 'Cerrar');
+          this.router.navigate(['trips', 'list']);
+        },
+        (error) => {
+          console.log(error);
+          this.matSnackBar.open(error, 'Cerrar');
+        }
+      );
     }
+  }
+
+  compareObjects(o1: any, o2: any) {
+    if (o1 && o2 && o1.id == o2.id) return true;
+    else return false;
   }
 
   volverAtras() {
