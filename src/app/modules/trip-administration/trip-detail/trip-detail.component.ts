@@ -72,7 +72,6 @@ export class TripDetailComponent implements OnInit {
       const id = params.get('id');
       console.log('El id que estoy editando es: ' + id);
       if (id) {
-        // @ts-ignore
         this.findTrip(Number(id));
       }
     });
@@ -114,7 +113,6 @@ export class TripDetailComponent implements OnInit {
     };
 
     if (this.selectedTrip && this.selectedTrip.id) {
-      // LLamar al metodo actualizar
       console.log('Actualizando una persona');
 
       body.id = this.selectedTrip.id;
