@@ -1,0 +1,47 @@
+<div class="bus-trip-crear-btn">
+  <span>Crear</span>
+  <button mat-icon-button (click)="crearBus()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef class="tip-title">ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="patente">
+    <th mat-header-cell *matHeaderCellDef class="tip-title">Patente</th>
+    <td mat-cell *matCellDef="let element">{{ element.patente }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cantidadAsientos">
+    <th mat-header-cell *matHeaderCellDef class="tip-title">
+      Cantidad De Asientos
+    </th>
+    <td mat-cell *matCellDef="let element">{{ element.cantidadAsientos }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="model">
+    <th mat-header-cell *matHeaderCellDef class="tip-title">Marca</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.model?.marca }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef class="tip-title">Acciones</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button (click)="seleccionarBus(element)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="borrarBus(element)">
+        <mat-icon class="icon-delete">delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

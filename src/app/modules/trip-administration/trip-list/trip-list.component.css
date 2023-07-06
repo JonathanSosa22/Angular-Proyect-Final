@@ -1,0 +1,23 @@
+table .tip-title {
+  background: red;
+  color: white;
+}
+
+.icon-delete {
+  color: red;
+}
+
+.bus-trip-crear-btn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bus-trip-crear-btn span {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.bus-trip-crear-btn button:hover {
+  border: 1px solid aquamarine;
+}

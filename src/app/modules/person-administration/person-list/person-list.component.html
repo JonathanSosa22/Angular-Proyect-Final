@@ -1,0 +1,40 @@
+<div class="person-list-crear-btn">
+  <span>Crear</span>
+  <button mat-icon-button (click)="crearPersona()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<div class="person-list-content">
+  <div *ngFor="let pers of personList" class="persona-container">
+    <div class="container">
+      <span
+        ><span class="peson-list-span">Nombre</span>: {{ pers.nombre }}</span
+      >
+      <span
+        ><span class="peson-list-span">Apellido</span>:
+        {{ pers.apellido }}</span
+      >
+      <span><span class="peson-list-span">Edad</span>: {{ pers.edad }}</span>
+
+      <div *ngIf="pers.edad >= 18">
+        <span style="font-weight: bold">Es mayor de edad</span>
+      </div>
+
+      <div *ngIf="pers.edad < 18">
+        <span style="font-weight: bold">Es menor de edad</span>
+      </div>
+    </div>
+    <button
+      mat-raised-button
+      (click)="seleccionarPersona(pers)"
+      class="btn-edit"
+    >
+      Editar
+    </button>
+
+    <button mat-raised-button (click)="borrarPersona(pers)" class="btn-delete">
+      Borrar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<form [formGroup]="busForm" (ngSubmit)="guardarCambios()">
+  <mat-card class="persona-container" style="padding: 20px">
+    <div class="title">
+      <button
+        type="button"
+        class="go-back-button"
+        mat-icon-button
+        (click)="volverAtras()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <h2>Editando la información de un bus</h2>
+    </div>
+
+    <mat-form-field class="person-input">
+      <mat-label>Patente:</mat-label>
+      <input matInput type="text" formControlName="patente" />
+      <div
+        *ngIf="
+          busForm.controls['patente'].invalid &&
+          (busForm.controls['patente'].dirty ||
+            busForm.controls['patente'].touched)
+        "
+      >
+        <mat-hint
+          *ngIf="busForm.controls['patente'].errors['required']"
+          style="color: red"
+        >
+          Porfavor complete el campo, este requerido
+        </mat-hint>
+      </div>
+    </mat-form-field>
+
+    <mat-form-field class="person-input">
+      <mat-label>Cantidad De Asientos:</mat-label>
+      <input matInput type="text" formControlName="cantidadAsientos" />
+
+      <div
+        *ngIf="
+          busForm.controls['cantidadAsientos'].invalid &&
+          (busForm.controls['cantidadAsientos'].dirty ||
+            busForm.controls['cantidadAsientos'].touched)
+        "
+      >
+        <mat-hint
+          *ngIf="busForm.controls['cantidadAsientos'].errors['required']"
+          style="color: red"
+        >
+          Porfavor complete el campo, este requerido
+        </mat-hint>
+      </div>
+    </mat-form-field>
+
+    <mat-form-field class="person-input">
+      <mat-label>Modelo:</mat-label>
+      <input matInput type="text" formControlName="modeloId" />
+
+      <div
+        *ngIf="
+          busForm.controls['modeloId'].invalid &&
+          (busForm.controls['modeloId'].dirty ||
+            busForm.controls['modeloId'].touched)
+        "
+      >
+        <mat-hint
+          *ngIf="busForm.controls['modeloId'].errors['required']"
+          style="color: red"
+        >
+          Porfavor complete el campo, este requerido
+        </mat-hint>
+      </div>
+    </mat-form-field>
+
+    <button type="submit" mat-button [disabled]="busForm.invalid">
+      Guardar Cambios
+    </button>
+  </mat-card>
+</form>

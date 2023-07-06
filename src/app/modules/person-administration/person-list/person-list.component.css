@@ -1,0 +1,62 @@
+.person-list-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.persona-container {
+  width: 12rem;
+  padding: 1rem;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: rgb(232, 232, 232);
+  border-radius: 0.6rem;
+}
+
+.persona-container span {
+  margin-bottom: 0.2rem;
+}
+
+.peson-list-span {
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.person-list-crear-btn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.person-list-crear-btn span {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.person-list-crear-btn button:hover {
+  border: 1px solid aquamarine;
+}
+
+.person-list-content .btn-edit {
+  background: rgb(80, 80, 80);
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.person-list-content .btn-delete {
+  background: red;
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.person-list-content .btn-edit:hover,
+.person-list-content .btn-delete:hover {
+  border: 4px solid aquamarine;
+}

@@ -1,0 +1,21 @@
+<app-admin-topbar (expandioBoton)="onExpandedPress($event)"></app-admin-topbar>
+
+<mat-drawer-container class="example-container" autosize style="height: 90%">
+  <mat-drawer
+    opened
+    class="example-sidenav"
+    mode="side"
+    disableClose="true"
+    [@openClose]="isExpanded ? 'open' : 'closed'"
+  >
+    <app-admin-sidebar [isExpanded]="isExpanded"></app-admin-sidebar>
+  </mat-drawer>
+
+  <div style="padding: 20px">
+    <div style="text-align: center">
+      <h1 style="font-weight: 700">Bienvenido!</h1>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</mat-drawer-container>
